@@ -1,0 +1,14 @@
+
+*.pyc
+
+mobile/.DS_Store
+
+mobile/static/.DS_Store
+
+mobile/static/page_mobile/.DS_Store
+
+mobile/static/page_mobile/img/.DS_Store
+
+mobile/static/page_mobile/knn_examples/.DS_Store
+
+mobile/static/page_mobile/knn_examples/train/.DS_Store

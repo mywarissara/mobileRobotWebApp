@@ -1,0 +1,227 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<!-- layout container -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="{% static 'page_mobile/js/change_page.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<div id="demo" class="carousel slide" data-ride="carousel">
+
+    <script>
+        $(document).ready(function () {
+            $('#Carousel').carousel({
+                interval: 5000
+            })
+        });
+    </script>
+
+    <style>
+        html,
+        body {
+            /* width: 1280px;
+        height: 800px; */
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+        }
+
+        .container {
+            display: flex;
+            flex-flow: wrap;
+            width: 1280px;
+            height: 800px;
+            overflow: hidden;
+            background: pink;
+        }
+
+        .container-top {
+            display: flex;
+            flex-flow: wrap;
+            width: 1280px;
+            height: 600px;
+            overflow: hidden;
+            z-index: 5;
+            background: black;
+        }
+
+        .container-bottom {
+            display: flex;
+            flex-flow: wrap;
+            width: 1280px;
+            height: 150px;
+            overflow: hidden;
+            background: black;
+        }
+
+        .container-bottom-2 {
+            display: flex;
+            flex-flow: wrap;
+            width: 1280px;
+            height: 50px;
+            overflow: hidden;
+            background: black;
+            z-index: 0;
+        }
+
+        .container .btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            /* transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%); */
+            color: white;
+            font-size: 16px;
+        }
+
+        .container .btn:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+
+        .img {
+            width: 1280px;
+            height: 700px;
+            overflow: auto;
+        }
+
+        
+
+    .btn-size {
+        width: 150px;
+        height: 60px;
+        padding-left: 10px;
+        color: white;
+        background-color: black;
+        border-radius: 15px;
+        margin-left: 25%;
+        margin-top: 20%;
+        /* font-size: x-large; */
+    }
+
+    .btn-img {
+        width: 50px;
+        height: 50px;
+        /* margin-bottom: 50px; */
+        margin-left: 1000px;
+        background-color: transparent;
+        object-fit: contain;
+        outline: none;
+    }
+
+    .btn-img img{
+        height: 50px;
+        width: 50px;
+        padding-bottom: 10%;
+        padding-left: 10%;
+    }
+
+    </style>
+
+    <!-- Carousel -->
+    <style>
+        .col-md-3 {
+            display: inline-block;
+            margin-left: -3px;
+        }
+
+        .col-md-3 img {
+            width: 100%;
+            height: auto;
+        }
+
+        body .carousel-indicators li {
+            background-color: black;
+        }
+
+        body .carousel-indicators {
+            bottom: 0;
+        }
+
+        body .carousel-control-prev-icon,
+        body .carousel-control-next-icon {
+            background-color: black;
+        }
+
+        body .no-padding {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+    </style>
+
+
+    <body>
+        <div class="container">
+            <div class="container-top">
+                
+                <img class="img" id="cat-img"src="{% static 'page_mobile/img/smile.gif' %}" alt="">
+                
+            </div>
+            <div class="container-bottom carousel-inner ">
+                <div class="carousel-item active">
+                    <div class="col-xs-3 col-sm-3 col-md-3">
+                        <button type="button" class="btn btn-outline-light btn-size">Light</button>
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3">
+                        <button type="button" class="btn btn-outline-light btn-size">Light</button>
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3">
+                        <button type="button" class="btn btn-outline-light btn-size">Light</button>
+                    </div>
+
+                </div>
+                <div class="carousel-item">
+                    <div class="col-xs-3 col-sm-3 col-md-3">
+                        <button type="button" class="btn btn-outline-light btn-size">Light</button>
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3">
+                        <button type="button" class="btn btn-outline-light btn-size">Light</button>
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3">
+                        <button type="button" class="btn btn-outline-light btn-size">Light</button>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="col-xs-3 col-sm-3 col-md-3">
+                        <button type="button" class="btn btn-outline-light btn-size">Light</button>
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3">
+                        <button type="button" class="btn btn-outline-light btn-size">Light</button>
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3">
+                        <button type="button" class="btn btn-outline-light btn-size">Light</button>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </a>
+                <a class="carousel-control-next" href="#demo" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </a>
+            </div>
+            <div class="container-bottom-2 ">
+                <div class="btn-img">
+                    <button class="" style="object-fit: contain; border: 0px; background-color: transparent; outline: none;" onclick="changeWindow('setting')"> 
+                        <img src="{% static 'page_mobile/img/settings.png' %}">
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Left and right controls -->
+        <!-- <div class="container">
+        <img src="standby.png" style="width: 1280px; height: 800px;">
+
+        <button type="button" class="btn btn-outline-light ">Light</button> -->
+        <!-- </div>  -->
+
+    </body>
+
+</html>

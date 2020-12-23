@@ -1,0 +1,142 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<!-- layout container -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="{% static 'page_mobile/js/change_page.js' %}"></script>
+<script src="{% static 'page_mobile/js/save_point.js' %}"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<style>
+    html,
+    body {
+        /* width: 1280px;
+        height: 800px; */
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: white;
+    }
+
+    .container {
+        display: flex;
+        flex-flow: wrap;
+        width: 1280px;
+        height: 800px;
+        overflow: hidden;
+        background: pink;
+    }
+
+    .container-top {
+        display: flex;
+        flex-flow: wrap;
+        width: 1280px;
+        height: 600px;
+        background: black;
+    }
+
+    .container-bottom {
+        display: flex;
+        flex-flow: wrap;
+        width: 1280px;
+        height: 100px;
+        overflow: hidden;
+        background: black;
+    }
+
+    .container-bottom-2 {
+        display: flex;
+        flex-flow: wrap;
+        width: 1280px;
+        height: 100px;
+        overflow: hidden;
+        background: black;
+    }
+
+    .container .btn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        /* transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%); */
+        color: white;
+        font-size: 16px;
+    }
+
+    .container .btn:hover {
+        background-color: rgba(0, 0, 0, 0.2);
+        color: white;
+    }
+
+    .img {
+        width: 1280px;
+        height: 700px;
+        overflow: auto;
+    }
+
+    .btn-size {
+        width: 150px;
+        height: 60px;
+        margin-left: 40%;
+        color: white;
+        background-color: black;
+        border-radius: 15px;
+
+        /* font-size: x-large; */
+    }
+
+    .vdo-setting {
+        margin-top: 10%;
+    }
+
+    .overlay {
+        position: absolute;
+        justify-content: center;
+        margin-top: 20%;
+        z-index: 10;
+        color: white;
+        font-size: xx-large;
+        font-weight: bold;
+    }
+</style>
+
+
+<body>
+    <div class="container">
+        <div class="container-top">
+            <button class="" style="width: 50px; height: 50px; margin: 20px; object-fit: contain; background-color: transparent; outline: none; border: 0px;" onclick="changeWindow('setting')"> 
+                <img style="width: 50px; height: 50px;  " src="{% static 'page_mobile/img/left-arrow.png' %}"></button>
+            <div style="padding-top: 20%; color: white; margin-left: 20%; ">
+                <label style="font-size: large; font-weight: bolder; color: white; padding-right: 50px;">Place Name: </label>
+                <input type="text" id="place" class="form-control-lg col-form-label" placeholder="Robotics Laboratory">
+            </div>
+            <span id="label-save-point"
+                style="font-size: xx-large; font-weight: bolder; color: white;  padding-left: 20%; padding-right: 20%;">Please
+                push the robot to the place you need to save and press the save button.</span>
+        </div>
+        <div class="container-bottom carousel-inner ">
+            <button class="btn-size" id="btn-save-point" onclick="save_point()">Save Position</button>
+
+        </div>
+        <div class="container-bottom-2">
+        </div>
+
+
+
+        <!-- Left and right controls -->
+        <!-- <div class="container">
+        <img src="standby.png" style="width: 1280px; height: 800px;">
+
+        <button type="button" class="btn btn-outline-light ">Light</button> -->
+        <!-- </div>  -->
+
+</body>
+
+</html>
