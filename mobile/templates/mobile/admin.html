@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="{% static 'page_mobile/js/change_page.js' %}"></script>
-<script src="{% static 'page_mobile/js/get_info.js' %}"></script>
+<script src="{% static 'page_mobile/js/save_point.js' %}"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -22,16 +22,18 @@
         height: 100%;
         margin: 0;
         padding: 0;
-        background-color: white;
+        background-color: black;
     }
 
     .container {
         display: flex;
         flex-flow: wrap;
-        width: 1280px;
-        height: 800px;
+        /* width: 1280px;
+        height: 800px; */
+        width: 100%;
+        height: 100%;
         overflow: hidden;
-        background: pink;
+        background: black;
     }
 
     .container-top {
@@ -39,7 +41,8 @@
         position: relative;
         flex-flow: wrap;
         padding-top: 5%;
-        width: 1280px;
+        /* width: 1280px; */
+        width: 100%;
         height: 600px;
         overflow: hidden;
         background: black;
@@ -49,16 +52,18 @@
     .container-bottom {
         display: flex;
         flex-flow: wrap;
-        width: 1280px;
+        /* width: 1280px; */
+        width: 100%;
         height: 100px;
         overflow: hidden;
-        background: pink;
+        background: black;
     }
 
     .container-bottom-2 {
         display: flex;
         flex-flow: wrap;
-        width: 1280px;
+        /* width: 1280px; */
+        width: 100%;
         height: 100px;
         overflow: hidden;
         background: black;
@@ -80,7 +85,8 @@
     }
 
     .img {
-        width: 1280px;
+        /* width: 1280px; */
+        width: 100%;
         height: 700px;
         overflow: auto;
     }
@@ -149,11 +155,11 @@
         <div class="container-bottom-2">
             <button class="" style="width: 50px; height: 50px; margin: 20px; object-fit: contain; background-color: transparent; outline: none; border: 0px;" onclick="changeWindow('setting')"> 
                 <img style="width: 50px; height: 50px;  " src="{% static 'page_mobile/img/left-arrow.png' %}"></button>
-            <span style="font-size: xx-large; font-weight:bolder; margin-left:45%; margin-top: 5%; color: white;">Register</span>
+            <span style="font-size: xx-large; font-weight:bolder; margin-left:35%; margin-top: 5%; color: white;">Register</span>
         </div>
         <div class="container-top" style="color: white;">
           <span style="color: white;"id="user-name">hello</span>
-          <button class="btn-size"onclick="show_info(0)">go</button>
+          <button class="btn-size"onclick="show_info()">go</button>
         </div>
 
 

@@ -130,8 +130,10 @@ def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo='ball_tree
     X = []
     y = []
 
+
     # Loop through each person in the training set
     for class_dir in os.listdir(train_dir):
+        
         if not os.path.isdir(os.path.join(train_dir, class_dir)):
             continue
 
@@ -213,10 +215,10 @@ def predict(X_img, model_path=None, knn_clf=None, distance_threshold=0.4):
 # Function Create Model: Train the KNN classifier and save it to disk
 
 
-def create_new_model():
+def create_new_model(data):
     print("Training KNN classifier...")
-    classifier = train("/mobile/static/page_mobile/knn_examples/train",
-                       model_save_path="trained_knn_model.clf", n_neighbors=3)
+    classifier = train(data,
+                       model_save_path=data+"/trained_knn_model.clf", n_neighbors=3)
     print("Training complete!")
 
 
@@ -255,26 +257,26 @@ def take_pic(name, img_file):
     return [_frame, top]
 
 
-
-def face_detection_main():
-    global frame
+name = ''
+def face_detection_main(frame):
+    global name
 
     # initialize the camera and grab a reference to the raw camera capture
     print("[INFO] `Camera` module...")
     # vs = PiVideoStream().start()
-    vs = WebcamVideoStream(src=0).start()
+    # vs = WebcamVideoStream(src=0).start()
 
     # allow the camera to warmup
-    time.sleep(1.0)
+    # time.sleep(1.0)
 
     while(True):
-        fps = FPS().start()
+        # fps = FPS().start()
 
-        frame = vs.read()
+        # frame = vs.read()
         frame = cv2.resize(
             frame, (frame.shape[1]//2, frame.shape[0]//2), interpolation=cv2.INTER_AREA)
 
-        fps.update()
+        # fps.update()
 
         # Using the trained classifier, make predictions for unknown images
         # Find all people in the image using a trained classifier model
@@ -297,20 +299,20 @@ def face_detection_main():
                 cv2.putText(frame, "unknown", (left + 6, bottom - 6),
                             font, 0.5, text_color, 1)
 
-        # show the frame
-        cv2.imshow("Frame", frame)
+        # # show the frame
+        # cv2.imshow("Frame", frame)
 
-        # if the `q` key was pressed, break from the loop
-        if cv2.waitKey(1) & 0xFF == ord("q"):
-            break
+        # # if the `q` key was pressed, break from the loop
+        # if cv2.waitKey(1) & 0xFF == ord("q"):
+        #     break
 
-        fps.stop()
-        print(fps.elapsed())
-        print(fps.fps())
-
+        # fps.stop()
+        # print(fps.elapsed())
+        # print(fps.fps())
+        return [frame,name]
     # do a bit of cleanup
-    cv2.destroyAllWindows()
-    vs.stop()
+    # cv2.destroyAllWindows()
+    # vs.stop()
 
 
 # if __name__ == "__main__":
