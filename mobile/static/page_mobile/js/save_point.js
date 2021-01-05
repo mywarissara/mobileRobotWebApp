@@ -1,8 +1,8 @@
-var ipadd = "172.16.5.20:8000"
+var ipadd = "172.16.10.20:8000"
 
 function sendPoint(no) {
     console.log('send point');
-    fetch('http://'+ ipadd + '/api/getConnection')
+    fetch('http://' + ipadd + '/api/getConnection')
         .then(response => response.json())
         .then(data => {
             console.log(data);
@@ -18,44 +18,31 @@ function sendPoint(no) {
         });
 }
 
-var point = ['Robotics', 'AI', '']
-
-function get_point_list(){
-    fetch('http://'+ ipadd + '/api/loadPoint')
-        .then(response => response.json())
-        .then(data => {
-            point = data;
-        });
-}
 
 
 function doSendPoint(no) {
-    let interested_point = point[no]
-    //  dummy position to send
-    fetch('http://'+ ipadd + '/api/getPose')
-        .then(response => response.json())
-        .then(data => {
-
-            fetch('http://'+ ipadd + '/api/moveBaseCoordinate', {
-                method: 'POST', // or 'PUT'
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            })
-                .then(response => response.text())
-                .then(b => {
-                    console.log('Success:', b);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
+    var point = { "location_index": no }
+    
+    fetch('http://' + ipadd + '/api/moveBasePoint', {
+        method: 'POST', // or 'PUT'
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(point),
+    })
+        .then(response => response.text())
+        .then(b => {
+            console.log('Success:', b);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
         });
 }
 
 
+
 function save_point() {
-    fetch('http://'+ ipadd + '/api/getConnection')
+    fetch('http://' + ipadd + '/api/getConnection')
         .then(response => response.json())
         .then(data => {
             console.log(data);
@@ -90,7 +77,7 @@ function save_point_true() {
         }
     }
     console.log('save point');
-    fetch('http://'+ ipadd + '/api/getPose')
+    fetch('http://' + ipadd + '/api/getPose')
         .then(response => response.json())
         .then(data => {
             placeName = document.getElementById('place').value;
@@ -98,7 +85,7 @@ function save_point_true() {
             a.poseMessage.targetPose.Pose = data;
             JSON.stringify(a);
 
-            fetch('http://'+ ipadd + '/api/savePoint', {
+            fetch('http://' + ipadd + '/api/savePoint', {
                 method: 'POST', // or 'PUT'
                 headers: {
                     'Content-Type': 'application/json',
@@ -116,7 +103,7 @@ function save_point_true() {
         });
 }
 
-function show_info(){
+function show_info() {
     fetch('http://localhost:8080/get_user_info')
         // .then(response => response.json())
         .then(response => response.text())
@@ -125,3 +112,4 @@ function show_info(){
         });
 
 }
+

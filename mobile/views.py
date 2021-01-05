@@ -3,11 +3,18 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from mobile.facereg import *
 import numpy
-
+import copy
+from gtts import gTTS
+from playsound import playsound 
+import os
 def index(request):
     return render(request,'mobile/index.html')
 
+turnOffCamera = False
+
 def setting(request):
+    global turnOffCamera
+    turnOffCamera = True
     return render(request,'mobile/setting.html')
 
 import json
@@ -15,9 +22,10 @@ import json
 _name = ''
 _no = 1
 isSnapComplete = 0
-number_pic = 30
+number_pic = 10
 isHuman = 0
 i = 0
+
 def register(request):
     global _name
     if request.method == 'POST':
@@ -111,6 +119,12 @@ def snapshot(request):
 
 import cv2
 globalImage = None
+language = 'en'
+
+def reading_from_string(text_to_read):
+    myobj = gTTS(text=text_to_read, lang=language, slow=False) 
+    myobj.save("username.mp3") 
+    os.system("mpg321 username.mp3") 
 
 class VideoCamera(object):
     def __init__(self):
@@ -122,22 +136,40 @@ class VideoCamera(object):
     def get_frame(self):
         global globalImage, isHuman
         _,image = self.video.read()
-        globalImage = image.copy()  
+
+        image = cv2.resize(image, (0,0), fx=0.30, fy=0.30) 
+        image[:, :int(image.shape[1] * 0.10), :] = 0
+        image[:, int(image.shape[1] * 0.90):, :] = 0 
+
+        globalImage = copy.deepcopy(image)
+        
         image, isHuman = take_pic("input", image)
-        print(isHuman)
+        
         ret, jpeg = cv2.imencode('.jpg', image)
         return jpeg.tobytes()
 
     def get_frame_to_predict(self):
         global globalImage
         _,image = self.video.read()
-        globalImage = image.copy()  
-        image, predicted_name = face_detection_main(image)
-        if predicted_name != 'unknown':
-            print(predicted_name)
 
-        ret, jpeg = cv2.imencode('.jpg', image)
-        return jpeg.tobytes()
+        image = cv2.resize(image, (0,0), fx=0.30, fy=0.30) 
+        image[:, :int(image.shape[1] * 0.10), :] = 0
+        image[:, int(image.shape[1] * 0.90):, :] = 0
+
+        globalImage = copy.deepcopy(image)
+
+        image, predicted_name = face_detection_main(image)
+        if predicted_name == 'unknown':
+            print("[INFO] `Face Recognition`: Name {}".format(predicted_name))
+        elif predicted_name == 'No Human!':
+            print("[INFO] `Face Recognition`: No Human!")
+        else:
+            print("[INFO] `Face Recognition`: Name {}".format(predicted_name))
+            reading_from_string('Hello, ' + predicted_name + 'How can I help you?')
+
+        return predicted_name
+        # ret, jpeg = cv2.imencode('.jpg', image)
+        # return jpeg.tobytes()
 
 
 def video_generator(camera):
@@ -149,9 +181,13 @@ def video_generator(camera):
 
 def video_generator_predict(camera):
     while True:
-        frame = camera.get_frame_to_predict()
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+        predicted_name = camera.get_frame_to_predict()
+        if predicted_name != 'unknown' and predicted_name != 'No Human!':
+            break
+        if turnOffCamera == True:
+            break
+        else:
+            pass
 
 def camera_live(request):
     try:

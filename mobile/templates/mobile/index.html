@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="{% static 'page_mobile/js/change_page.js' %}"></script>
 <script src="{% static 'page_mobile/js/save_point.js' %}"></script>
+<script src="{% static 'page_mobile/js/button-item.js' %}"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -159,13 +160,19 @@
         }
     </style>
 
-    <body>
+    <body onload="addBtn()">
         <div class="container">
+            <button onclick="addBtn()">Save</button>
+            <ul id="myList">
+                <li>Coffee</li>
+                <li>Tea</li>
+            </ul>
             <div class="container-top">
                 <img class="img" id="cat-img" src="{% static 'page_mobile/img/smile.gif' %}" alt="">
             </div>
-            <div class="container-bottom carousel-inner ">
-                <div class="carousel-item active">
+            <div class="container-bottom carousel-inner " id="btn-container">
+                
+                <!-- <div class="carousel-item active">
                     <div class="col-xs-3 col-sm-3 col-md-3">
                         <button type="button" class="btn btn-outline-light btn-size" onclick="sendPoint(0)">Robotics
                             Lab</button>
@@ -179,7 +186,18 @@
                             Lab</button>
                     </div>
 
-                </div>
+                </div> -->
+                <!-- <div class="carousel-item">
+                    <div class="col-xs-3 col-sm-3 col-md-3">
+                        <button type="button" class="btn btn-outline-light btn-size">Light</button>
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3">
+                        <button type="button" class="btn btn-outline-light btn-size">Light</button>
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3">
+                        <button type="button" class="btn btn-outline-light btn-size">Light</button>
+                    </div>
+                </div> 
                 <div class="carousel-item">
                     <div class="col-xs-3 col-sm-3 col-md-3">
                         <button type="button" class="btn btn-outline-light btn-size">Light</button>
@@ -190,18 +208,7 @@
                     <div class="col-xs-3 col-sm-3 col-md-3">
                         <button type="button" class="btn btn-outline-light btn-size">Light</button>
                     </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="col-xs-3 col-sm-3 col-md-3">
-                        <button type="button" class="btn btn-outline-light btn-size">Light</button>
-                    </div>
-                    <div class="col-xs-3 col-sm-3 col-md-3">
-                        <button type="button" class="btn btn-outline-light btn-size">Light</button>
-                    </div>
-                    <div class="col-xs-3 col-sm-3 col-md-3">
-                        <button type="button" class="btn btn-outline-light btn-size">Light</button>
-                    </div>
-                </div>
+                </div> -->
                 <a class="carousel-control-prev" href="#demo" data-slide="prev">
                     <span class="carousel-control-prev-icon"></span>
                 </a>
@@ -209,17 +216,15 @@
                     <span class="carousel-control-next-icon"></span>
                 </a>
             </div>
-            <div class="container-bottom-2 ">
+            <div class="container-bottom-2">
                 <div class="btn-img">
                     <button class=""
                         style="object-fit: contain; border: 0px; background-color: transparent; outline: none;"
                         onclick="changeWindow('setting')">
                         <img src="{% static 'page_mobile/img/settings.png' %}">
-
-                        <!-- predict face -->
-                        <img src="http://localhost:8080/predict">
-
                     </button>
+                    <img src="http://localhost:8080/predict">
+
                 </div>
             </div>
         </div>

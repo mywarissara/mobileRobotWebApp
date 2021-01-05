@@ -223,99 +223,37 @@ def create_new_model(data):
 
 
 def take_pic(name, img_file):
-
-    path_curr = os.getcwd()  # get current Dir
-    path_pic = path_curr + "/knn_examples/train/" + name
-    try:
-        os.mkdir(path_pic)
-    except:
-        print("[Warning] The folder already existed!")
-
-    # initialize the camera and grab a reference to the raw camera capture
-    print("[INFO] `Camera` module...")
-
-    # allow the camera to warmup
-    time.sleep(1.0)
-
-    initTime = time.time()
-    currentTime = time.time()
-    _no = 0
-    _frame = img_file
-    _frame = cv2.resize(
-        _frame, (_frame.shape[1]//2, _frame.shape[0]//2), interpolation=cv2.INTER_AREA)
-    _frame_copy = copy.deepcopy(_frame)
-    centerX, centerY, _ = _frame.shape
+    
+    centerX, centerY, _ = img_file.shape
     top = right = bottom = left = 0
-    X_face_locations = face_recognition.face_locations(_frame_copy)
+    X_face_locations = face_recognition.face_locations(img_file)
+    
     try:
         (top, right, bottom, left) = X_face_locations[:][0]
-        cv2.rectangle(_frame, (left, top), (right, bottom),
+        cv2.rectangle(img_file, (left, top), (right, bottom),
                       (0, 255, 0), 1)  # Draw rectangle
     except:
         pass
     
-    return [_frame, top]
+    return [img_file, top]
 
 
 name = ''
 def face_detection_main(frame):
     global name
-
-    # initialize the camera and grab a reference to the raw camera capture
-    print("[INFO] `Camera` module...")
-    # vs = PiVideoStream().start()
-    # vs = WebcamVideoStream(src=0).start()
-
-    # allow the camera to warmup
-    # time.sleep(1.0)
-
-    while(True):
-        # fps = FPS().start()
-
-        # frame = vs.read()
-        frame = cv2.resize(
-            frame, (frame.shape[1]//2, frame.shape[0]//2), interpolation=cv2.INTER_AREA)
-
-        # fps.update()
-
-        # Using the trained classifier, make predictions for unknown images
-        # Find all people in the image using a trained classifier model
-        predictions = predict(
-            frame, model_path="trained_knn_model.clf", distance_threshold=0.4)
-        # print(predictions)
-        # Print results on the console
-        for name, (top, right, bottom, left) in predictions:
-
-            cv2.rectangle(frame, (left, top), (right, bottom),
-                          rec_color, 1)                  # Draw rectangle
-            cv2.rectangle(frame, (left, bottom - 18), (right, bottom),
-                          rec_color, cv2.FILLED)  # Put text in image
-
-            if name != "unknown":
-                print("- Found {} at ({}, {})".format(name, left, top))
-                cv2.putText(frame, name, (left + 6, bottom - 6),
-                            font, 0.5, text_color, 1)
-            else:
-                cv2.putText(frame, "unknown", (left + 6, bottom - 6),
-                            font, 0.5, text_color, 1)
-
-        # # show the frame
-        # cv2.imshow("Frame", frame)
-
-        # # if the `q` key was pressed, break from the loop
-        # if cv2.waitKey(1) & 0xFF == ord("q"):
-        #     break
-
-        # fps.stop()
-        # print(fps.elapsed())
-        # print(fps.fps())
-        return [frame,name]
-    # do a bit of cleanup
-    # cv2.destroyAllWindows()
-    # vs.stop()
-
-
-# if __name__ == "__main__":
-#     create_new_model()
-    #face_detection_main()
-    # take_pic("test")
+    names= []
+    
+    predictions = predict(
+        frame, model_path="trained_knn_model.clf", distance_threshold=0.4)
+    
+    try:
+        if predictions == []:
+            name = "No Human!"
+        else:
+            for name, (top, right, bottom, left) in predictions:
+                names.append(name)
+    except:
+        name = "No Human!"
+    
+    return [frame,name]
+    
