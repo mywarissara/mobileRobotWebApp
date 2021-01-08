@@ -226,7 +226,7 @@ def take_pic(name, img_file):
     
     centerX, centerY, _ = img_file.shape
     top = right = bottom = left = 0
-    X_face_locations = face_recognition.face_locations(img_file)
+    X_face_locations = face_recognition.face_locations(img_file, model='cnn')
     
     try:
         (top, right, bottom, left) = X_face_locations[:][0]
@@ -239,12 +239,13 @@ def take_pic(name, img_file):
 
 
 name = ''
-def face_detection_main(frame):
+def face_detection_main(frame,data):
     global name
     names= []
     
+    # print(data+"trained_knn_model.clf")
     predictions = predict(
-        frame, model_path="trained_knn_model.clf", distance_threshold=0.4)
+        frame, model_path=data+"trained_knn_model.clf", distance_threshold=0.4)
     
     try:
         if predictions == []:

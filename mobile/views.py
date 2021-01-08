@@ -8,17 +8,22 @@ from gtts import gTTS
 from playsound import playsound 
 import os
 def index(request):
+    global onPredict
+    onPredict = True
     return render(request,'mobile/index.html')
+
+from django.views.decorators.csrf import csrf_exempt
 
 turnOffCamera = False
 
 def setting(request):
-    global turnOffCamera
+    global turnOffCamera, onPredict
     turnOffCamera = True
+    onPredict = False
     return render(request,'mobile/setting.html')
 
 import json
-  
+
 _name = ''
 _no = 1
 isSnapComplete = 0
@@ -26,6 +31,7 @@ number_pic = 10
 isHuman = 0
 i = 0
 
+@csrf_exempt
 def register(request):
     global _name
     if request.method == 'POST':
@@ -120,6 +126,7 @@ def snapshot(request):
 import cv2
 globalImage = None
 language = 'en'
+onPredict = True
 
 def reading_from_string(text_to_read):
     myobj = gTTS(text=text_to_read, lang=language, slow=False) 
@@ -134,7 +141,8 @@ class VideoCamera(object):
         self.video.release()
 
     def get_frame(self):
-        global globalImage, isHuman
+        global globalImage, isHuman, onPredict
+
         _,image = self.video.read()
 
         image = cv2.resize(image, (0,0), fx=0.30, fy=0.30) 
@@ -144,32 +152,27 @@ class VideoCamera(object):
         globalImage = copy.deepcopy(image)
         
         image, isHuman = take_pic("input", image)
+       
+        path_curr = os.getcwd()  # get current Dir
+        path_pic = path_curr + "/mobile/static/page_mobile/knn_examples/train/"
         
+        image, predicted_name = face_detection_main(image, path_pic)
+        if onPredict == True:
+            image, predicted_name = face_detection_main(image, path_pic)
+            if predicted_name == 'unknown':
+                print("[INFO] `Face Recognition`: Name {}".format(predicted_name))
+            elif predicted_name == 'No Human!':
+                print("[INFO] `Face Recognition`: No Human!")
+            else:
+                print("[INFO] `Face Recognition`: Name {}".format(predicted_name))
+                reading_from_string('Hello, ' + predicted_name + ' How can I help you?')
+                onPredict = False
+
+        # else:
+        #     predicted_name = 'Off camera'
+
         ret, jpeg = cv2.imencode('.jpg', image)
         return jpeg.tobytes()
-
-    def get_frame_to_predict(self):
-        global globalImage
-        _,image = self.video.read()
-
-        image = cv2.resize(image, (0,0), fx=0.30, fy=0.30) 
-        image[:, :int(image.shape[1] * 0.10), :] = 0
-        image[:, int(image.shape[1] * 0.90):, :] = 0
-
-        globalImage = copy.deepcopy(image)
-
-        image, predicted_name = face_detection_main(image)
-        if predicted_name == 'unknown':
-            print("[INFO] `Face Recognition`: Name {}".format(predicted_name))
-        elif predicted_name == 'No Human!':
-            print("[INFO] `Face Recognition`: No Human!")
-        else:
-            print("[INFO] `Face Recognition`: Name {}".format(predicted_name))
-            reading_from_string('Hello, ' + predicted_name + 'How can I help you?')
-
-        return predicted_name
-        # ret, jpeg = cv2.imencode('.jpg', image)
-        # return jpeg.tobytes()
 
 
 def video_generator(camera):
@@ -178,25 +181,8 @@ def video_generator(camera):
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
-
-def video_generator_predict(camera):
-    while True:
-        predicted_name = camera.get_frame_to_predict()
-        if predicted_name != 'unknown' and predicted_name != 'No Human!':
-            break
-        if turnOffCamera == True:
-            break
-        else:
-            pass
-
 def camera_live(request):
     try:
         return StreamingHttpResponse(video_generator(VideoCamera()), content_type="multipart/x-mixed-replace;boundary=frame")
-    except:  
-        pass
-
-def camera_live_to_predict(request):
-    try:
-        return StreamingHttpResponse(video_generator_predict(VideoCamera()), content_type="multipart/x-mixed-replace;boundary=frame")
     except:  
         pass

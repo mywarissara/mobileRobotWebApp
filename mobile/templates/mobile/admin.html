@@ -149,21 +149,72 @@
     }
 </style>
 
+<style>
+	.mobile_table_container {
+		background-color: #000;
+		height: 300px;
+        border-color: white;
+		border-radius: 8px;
+		overflow-y: auto;
+		margin-top: 4px;
+        width: 700px;
+	}
 
-<body>
+	.mobile_table {
+		border-collapse: collapse;
+		width: 99.9%;
+	}
+
+	.mobile_table th {
+		background-color: #eee;
+		color: #000;
+		padding: 10px;
+	}
+
+	.mobile_table tbody tr:hover {
+		background-color: #888;
+	}
+
+	.mobile_table tbody td {
+		line-height: 30px;
+	}
+</style>
+
+<body onload="refreshUsers();highlight_row();">
     <div class="container">
         <div class="container-bottom-2">
             <button class="" style="width: 50px; height: 50px; margin: 20px; object-fit: contain; background-color: transparent; outline: none; border: 0px;" onclick="changeWindow('setting')"> 
                 <img style="width: 50px; height: 50px;  " src="{% static 'page_mobile/img/left-arrow.png' %}"></button>
-            <span style="font-size: xx-large; font-weight:bolder; margin-left:35%; margin-top: 5%; color: white;">Register</span>
+            <span style="font-size: xx-large; font-weight:bolder; margin-left:35%; margin-top: 5%; color: white;">Users</span>
         </div>
         <div class="container-top" style="color: white;">
-          <span style="color: white;"id="user-name">hello</span>
-          <button class="btn-size"onclick="show_info()">go</button>
+          <!-- <span style="color: white;"id="user-name">hello</span> -->
+          <div class="mobile_table_container">
+
+            <table id="mobile_table" cellspacing="0" cellpadding="0" class="mobile_table" cellspacing="5"
+                width="100%">
+
+                <thead>
+                    <tr class="mobile_tr table-layout">
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+        <!-- <button class=""onclick="mobileDelRow()">Del User</button> -->
+        <button class="btn btn-size btn-outline-light" style="margin-left: -10%;" onclick="changeWindow('register')">Add User</button>
+
         </div>
 
 
         <div class="container-bottom carousel-inner ">
+
         </div>
        
 

@@ -10,7 +10,6 @@ urlpatterns = [
     path('users', views.admin),
     path('save_point', views.save_point),
     path('video', views.camera_live),
-    path('predict', views.camera_live_to_predict),
     path('snap', views.snapshot),
     path('counter', views.counter),
     path('complete', views.complete),
